@@ -29,7 +29,7 @@
 #include "CTBFileTileSerializer.hpp"
 
 #include "CTBFileOutputStream.hpp"
-#include "CTBZOutputStream.hpp"
+#include "CTBOutputStream.hpp"
 
 using namespace std;
 using namespace ctb;
@@ -138,7 +138,7 @@ ctb::CTBFileTileSerializer::serializeTile(const ctb::TerrainTile *tile) {
   const string filename = getTileFilename(tile, moutputDir, "terrain");
   const string temp_filename = concat(filename, ".tmp");
 
-  CTBZFileOutputStream ostream(temp_filename.c_str());
+  CTBFileOutputStream ostream(temp_filename.c_str());
   tile->writeFile(ostream);
   ostream.close();
 
@@ -158,7 +158,7 @@ ctb::CTBFileTileSerializer::serializeTile(const ctb::MeshTile *tile, bool writeV
   const string filename = getTileFilename(coordinate, moutputDir, "terrain");
   const string temp_filename = concat(filename, ".tmp");
 
-  CTBZFileOutputStream ostream(temp_filename.c_str());
+  CTBFileOutputStream ostream(temp_filename.c_str());
   tile->writeFile(ostream, writeVertexNormals);
   ostream.close();
 
