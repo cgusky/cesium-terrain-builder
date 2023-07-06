@@ -138,9 +138,10 @@ ctb::CTBFileTileSerializer::serializeTile(const ctb::TerrainTile *tile) {
   const string filename = getTileFilename(tile, moutputDir, "terrain");
   const string temp_filename = concat(filename, ".tmp");
 
-  CTBFileOutputStream ostream(temp_filename.c_str());
+  FILE *fp = fopen(temp_filename.c_str(), "wb");
+  CTBFileOutputStream ostream(fp);
   tile->writeFile(ostream);
-  ostream.close();
+  fclose(fp);
 
   if (VSIRename(temp_filename.c_str(), filename.c_str()) != 0) {
     throw CTBException("Could not rename temporary file");
@@ -158,9 +159,10 @@ ctb::CTBFileTileSerializer::serializeTile(const ctb::MeshTile *tile, bool writeV
   const string filename = getTileFilename(coordinate, moutputDir, "terrain");
   const string temp_filename = concat(filename, ".tmp");
 
-  CTBFileOutputStream ostream(temp_filename.c_str());
+  FILE *fp = fopen(temp_filename.c_str(), "wb");
+  CTBFileOutputStream ostream(fp);
   tile->writeFile(ostream, writeVertexNormals);
-  ostream.close();
+  fclose(fp);
 
   if (VSIRename(temp_filename.c_str(), filename.c_str()) != 0) {
     throw CTBException("Could not rename temporary file");
